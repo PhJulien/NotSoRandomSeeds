@@ -53,7 +53,8 @@ ggplot(df, aes(x=id, y=cumperc)) +
 
 ```{r}
 ggplot(df %>% filter(id <=10) %>% mutate(seed=factor(seed, levels=seed)), aes(x=seed, y=perc)) +
-  geom_bar(stat="identity")
+  geom_bar(stat="identity") +
+  labs(x="Seed", y="Usage percentage", title="Top 10 seeds used by R developers")
 ```
 
 ## Number of digits
@@ -71,6 +72,8 @@ head(df_digits, 10)
 
 ```{r}
 ggplot(df_digits, aes(x=factor(nb_digits), y=perc)) +
-  geom_bar(stat="identity")
+  geom_bar(stat="identity") + 
+  labs(y="Percentage of cases", x="Number of digits")
+
 ```
 
