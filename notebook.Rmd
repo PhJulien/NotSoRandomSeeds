@@ -1,0 +1,76 @@
+---
+title: "Not so random seeds"
+author: "Philippe Julien"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+Rseeds <- unlist(read.delim("Seeds.20.01.2015.R.txt", header=FALSE))
+```
+
+```{r}
+head(Rseeds)
+```
+
+```{r}
+
+Rseeds_count <- tapply(Rseeds, Rseeds, length)
+
+df <- data.frame(seed=names(Rseeds_count), n=Rseeds_count) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+head(df, 10)
+```
+
+
+
+```{r}
+df <- df %>%
+  mutate(cumperc = cumsum(perc),
+         id = 1:length(n))
+  
+```
+
+```{r}
+ggplot(df, aes(x=id, y=cumperc)) + 
+  geom_line() +
+  labs(x="Index", y="Cumulative percentage")
+```
+
+```{r}
+ggplot(df, aes(x=id, y=cumperc)) + 
+  geom_line() +
+  labs(x="Index", y="Cumulative percentage") +
+  geom_vline(xintercept = 10) +
+  scale_y_continuous(breaks=(0:10)*10)
+```
+
+```{r}
+ggplot(df %>% filter(id <=10) %>% mutate(seed=factor(seed, levels=seed)), aes(x=seed, y=perc)) +
+  geom_bar(stat="identity")
+```
+
+## Number of digits
+
+```{r}
+df_digits <- df %>%
+  mutate(nb_digits = nchar(as.character(seed))) %>%
+  group_by(nb_digits) %>%
+  summarise(n = sum(n),
+            perc = sum(perc)) %>%
+  arrange(desc(n))
+
+head(df_digits, 10)
+```
+
+```{r}
+ggplot(df_digits, aes(x=factor(nb_digits), y=perc)) +
+  geom_bar(stat="identity")
+```
+
