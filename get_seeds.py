@@ -8,7 +8,7 @@ url = 'https://api.stackexchange.com/2.2/search/advanced'
 ######### R
 #########
 
-
+print >> sys.stderr, ">> R"
 params = dict(
     pagesize='100',
     order='desc',
@@ -56,8 +56,9 @@ while goon:
         print >> sys.stderr, "Maximum queries threshold reached. Exiting."
     cur += 1
     
+print >> sys.stderr, ">> Writing final file"
 
-file = open("/Users/pjulien/Dropbox/Code/Seeds.20.01.2015.R.txt", "w")
+file = open("Seeds.28.11.2015.R.txt", "w")
 for s in seeds:
     file.write(str(s) + "\n")
 file.close()
@@ -69,6 +70,8 @@ file.close()
 ########## Python
 ##########
 
+
+print >> sys.stderr, ">> Python"
 
 
 params = dict(
@@ -119,7 +122,9 @@ while goon:
     cur += 1
     
 
-file = open("/Users/pjulien/Dropbox/Code/Seeds.20.01.2015.Python.txt", "w")
+print >> sys.stderr, ">> Writing final file"
+
+file = open("Seeds.28.11.2017.Python.txt", "w")
 for s in seeds:
     file.write(str(s) + "\n")
 file.close()
